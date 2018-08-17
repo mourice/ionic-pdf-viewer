@@ -4,11 +4,52 @@
       Ionic Blank
     </ion-title>
   </ion-navbar>
+  <ion-row align-items-center style="color: white; background: gray;height: 40px;">
+      <ion-col align-self-start>
+
+          <button class="bar-button" (click)="prevPage()" [disabled]="page === 1" clear ion-button icon-only style="padding-right:10px">
+              <ion-icon class="bar-icon" name="arrow-dropleft"></ion-icon>
+          </button>
+
+          <button class="bar-button" (click)="nextPage()" [disabled]="page === totalPages" clear ion-button icon-only>
+              <ion-icon class="bar-icon" name="arrow-dropright"></ion-icon>
+          </button>
+
+      </ion-col>
+      <ion-col text-center align-self-center> 
+        <ion-item class="bar-input-item">
+          <ion-input item-start type="number" [(ngModel)]="pageNumber" (keyup)="gotoPage($event)"></ion-input>
+          <ion-label item-end>/ {{ totalPages }}</ion-label> 
+        </ion-item>
+        </ion-col>
+      <ion-col text-center align-self-end>
+
+          <button class="bar-button" (click)="zoomOut()" clear ion-button icon-only>
+              <ion-icon class="bar-icon" name="remove-circle"></ion-icon>
+          </button>
+
+          <button class="bar-button" ion-button clear strong (click)="fit()" >
+            <span class="bar-icon">100%</span>
+          </button>
+
+          <button class="bar-button" (click)="zoomIn()" clear ion-button icon-only>
+              <ion-icon class="bar-icon" name="add-circle"></ion-icon>
+          </button>
+
+      </ion-col>
+  </ion-row>
+
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+    
+
+  <!-- <div *ngIf="isLoaded" style="text-align: center;">
+    <button (click)="prevPage()" [disabled]="page === 1">Prev</button>
+    <span>{{ page }} / {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+  </div> -->
+  <pdf-viewer [src]="pdfSrc" [original-size]="originalSize" [fit-to-page]="fitToPage"  [(page)]="page" (after-load-complete)="afterLoadComplete($event)"
+    (error)="onError($event)" style="display: block;" [zoom]="zoom" [show-all]="showAll" [external-link-target]="'blank'"></pdf-viewer>
+
 </ion-content>
